@@ -7,10 +7,9 @@ import com.sun.tools.javac.tree.TreeScanner;
 import com.sun.tools.javac.util.Context;
 
 public class OptimizationTaskListener implements TaskListener {
-    private final TreeScanner treeVisitor;
-
+    final Context context;
     public OptimizationTaskListener(Context context){
-        this.treeVisitor = new ConstFoldTreeScanner(context);
+        this.context = context;
     }
 
     @Override
@@ -19,7 +18,8 @@ public class OptimizationTaskListener implements TaskListener {
     @Override
     public void finished(TaskEvent e) {
         if (e.getKind() == TaskEvent.Kind.PARSE){
-            treeVisitor.scan((JCTree)e.getCompilationUnit());
+            TreeScanner visitor = new ConstFoldTreeScanner(context);
+            visitor.scan((JCTree)e.getCompilationUnit());
         }
     }
 }
