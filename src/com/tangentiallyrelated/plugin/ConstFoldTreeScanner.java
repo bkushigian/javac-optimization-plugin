@@ -20,7 +20,9 @@ public class ConstFoldTreeScanner extends TreeScanner{
 
     @Override
     public void visitBinary(JCTree.JCBinary tree) {
+        System.out.println("    visitBinary: " + tree);
         super.visitBinary(tree);
         TreeFolder.foldr(tree);
+        System.out.println("  revisitBinary: " + tree);
     }
 }
