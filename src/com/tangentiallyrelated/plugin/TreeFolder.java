@@ -72,6 +72,7 @@ public class TreeFolder {
         return tagIsAssociative(tag) && interpreters.containsKey(tag)
                                      && rhs instanceof JCTree.JCLiteral
                                      && lhs instanceof JCTree.JCBinary
+                                     && ((JCTree.JCBinary)lhs).rhs instanceof JCTree.JCLiteral
                                      && ((JCTree.JCLiteral)((JCTree.JCBinary)lhs).rhs).typetag == TypeTag.INT
                                      && ((JCTree.JCLiteral) rhs).typetag == TypeTag.INT;
     }
