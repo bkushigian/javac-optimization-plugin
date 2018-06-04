@@ -16,4 +16,9 @@ public class TestClass {
         int seconds = years * 60 * 60 * 24 * 365;
         return seconds;
     }
+
+    public int complicatedConstantFold(int a) {
+        int result = 1 + (a + 2 + 3) + 4;
+        return result;
+    }
 }
