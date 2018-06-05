@@ -8,8 +8,31 @@ import com.sun.tools.javac.util.Context;
 
 public class OptimizationTaskListener implements TaskListener {
     final Context context;
-    public OptimizationTaskListener(Context context){
+    private TreeScanner visitor;
+
+    boolean printAST = false;
+    boolean foldConsts = true;
+
+    /**
+     *
+     * @param context
+     * @param args
+     */
+    public OptimizationTaskListener(Context context, String ... args){
         this.context = context;
+        handleArgs(args);
+    }
+
+    private void handleArgs(String[] args) {
+        for (String arg : args){
+            if ("print-ast".equals(arg)){
+                printAST = true;
+            } else if ("no-fold-constants".equals(args)){
+                foldConsts = false;
+            } else {
+                System.err.println("Unknown option " + arg + "... ignoring");
+            }
+        }
     }
 
     @Override
@@ -18,13 +41,14 @@ public class OptimizationTaskListener implements TaskListener {
     @Override
     public void finished(TaskEvent e) {
         if (e.getKind() == TaskEvent.Kind.PARSE){
-            // Print the tree
-            TreeScanner visitor = new ASTPrintTreeScanner();
-            visitor.scan((JCTree)e.getCompilationUnit());
-
-            // Right Fold
-            // visitor = new ConstFoldTreeScanner(context);
-            // visitor.scan((JCTree)e.getCompilationUnit());
+            if (printAST) {
+                visitor = new ASTPrintTreeScanner();
+                visitor.scan((JCTree) e.getCompilationUnit());
+            }
+            if (foldConsts) {
+                visitor = new ConstFoldTreeScanner(context);
+                visitor.scan((JCTree)e.getCompilationUnit());
+            }
         }
     }
 }
