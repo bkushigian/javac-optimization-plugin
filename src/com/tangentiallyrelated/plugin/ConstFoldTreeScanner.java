@@ -8,15 +8,12 @@ public class ConstFoldTreeScanner extends TreeScanner{
 
     @Override
     public void visitMethodDef(JCTree.JCMethodDecl tree) {
-        System.out.println("visitMethodDef: " + tree.name);
         super.visitMethodDef(tree);
     }
 
     @Override
     public void visitBinary(JCTree.JCBinary tree) {
-        System.out.println("    visitBinary: " + tree);
         super.visitBinary(tree);
         TreeFolder.foldr(tree);
-        System.out.println("  revisitBinary: " + tree);
     }
 }
