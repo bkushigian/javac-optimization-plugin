@@ -7,7 +7,6 @@ import com.sun.tools.javac.tree.TreeScanner;
 import com.sun.tools.javac.util.Context;
 
 public class OptimizationTaskListener implements TaskListener {
-    final Context context;
     private TreeScanner visitor;
 
     boolean printAST = false;
@@ -15,11 +14,9 @@ public class OptimizationTaskListener implements TaskListener {
 
     /**
      *
-     * @param context
      * @param args
      */
-    public OptimizationTaskListener(Context context, String ... args){
-        this.context = context;
+    public OptimizationTaskListener(String ... args){
         handleArgs(args);
     }
 
@@ -46,7 +43,7 @@ public class OptimizationTaskListener implements TaskListener {
                 visitor.scan((JCTree) e.getCompilationUnit());
             }
             if (foldConsts) {
-                visitor = new ConstFoldTreeScanner(context);
+                visitor = new ConstFoldTreeScanner();
                 visitor.scan((JCTree)e.getCompilationUnit());
             }
         }

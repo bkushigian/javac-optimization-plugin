@@ -6,12 +6,6 @@ import com.sun.tools.javac.util.Context;
 
 public class ConstFoldTreeScanner extends TreeScanner{
 
-    private final Context context;
-
-    public ConstFoldTreeScanner(Context context){
-        this.context = context;
-    }
-
     @Override
     public void visitMethodDef(JCTree.JCMethodDecl tree) {
         System.out.println("visitMethodDef: " + tree.name);
