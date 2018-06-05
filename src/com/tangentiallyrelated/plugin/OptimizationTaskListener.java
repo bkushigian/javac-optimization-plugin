@@ -18,8 +18,13 @@ public class OptimizationTaskListener implements TaskListener {
     @Override
     public void finished(TaskEvent e) {
         if (e.getKind() == TaskEvent.Kind.PARSE){
-            TreeScanner visitor = new ConstFoldTreeScanner(context);
+            // Print the tree
+            TreeScanner visitor = new ASTPrintTreeScanner();
             visitor.scan((JCTree)e.getCompilationUnit());
+
+            // Right Fold
+            // visitor = new ConstFoldTreeScanner(context);
+            // visitor.scan((JCTree)e.getCompilationUnit());
         }
     }
 }
