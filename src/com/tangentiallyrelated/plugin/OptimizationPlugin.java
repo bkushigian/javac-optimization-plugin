@@ -15,6 +15,6 @@ public class OptimizationPlugin implements Plugin {
     @Override
     public void init(JavacTask task, String... args) {
         Context context = ((BasicJavacTask)task).getContext();
-        task.addTaskListener(new OptimizationTaskListener(context));
+        task.addTaskListener(new OptimizationTaskListener(context, args));
     }
 }
